@@ -1,9 +1,5 @@
 package marketplace.clube.varejo.model;
 
-import java.util.UUID;
-
-import org.springframework.security.core.GrantedAuthority;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,41 +7,36 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 @Entity
-@Table(name = "acesso")
-public class Acesso implements GrantedAuthority {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
+@Table(name = "marca_produto")
+public class MarcaProduto implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "uuid", updatable = false)
-	private UUID id;
-	
-	@Column(nullable = false)
-	private String descricao;
-	
-	@Override
-	public String getAuthority() {
-		return this.descricao;
-	}
-
+    private UUID id;
+    
+    @Column(nullable = false)
+    private String nomeDesc;
+    
 	public UUID getId() {
 		return id;
 	}
-
 	public void setId(UUID id) {
 		this.id = id;
 	}
-
-	public String getDescricao() {
-		return descricao;
+    
+	public String getNomeDesc() {
+		return nomeDesc;
 	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNomeDesc(String nomeDesc) {
+		this.nomeDesc = nomeDesc;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,7 +44,6 @@ public class Acesso implements GrantedAuthority {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -62,7 +52,7 @@ public class Acesso implements GrantedAuthority {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Acesso other = (Acesso) obj;
+		MarcaProduto other = (MarcaProduto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -70,4 +60,6 @@ public class Acesso implements GrantedAuthority {
 			return false;
 		return true;
 	}
+
+	
 }

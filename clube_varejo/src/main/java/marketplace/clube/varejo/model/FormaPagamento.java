@@ -1,8 +1,7 @@
 package marketplace.clube.varejo.model;
 
+import java.io.Serializable;
 import java.util.UUID;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,23 +11,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "acesso")
-public class Acesso implements GrantedAuthority {
-	
+@Table(name = "forma_pagamento")
+public class FormaPagamento implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(columnDefinition = "uuid", updatable = false)
-	private UUID id;
-	
-	@Column(nullable = false)
-	private String descricao;
-	
-	@Override
-	public String getAuthority() {
-		return this.descricao;
-	}
+    private UUID id;
+    
+    @Column(nullable = false)
+    private String descricao;
 
 	public UUID getId() {
 		return id;
@@ -50,6 +44,7 @@ public class Acesso implements GrantedAuthority {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -62,7 +57,12 @@ public class Acesso implements GrantedAuthority {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Acesso other = (Acesso) obj;
+		FormaPagamento other = (FormaPagamento) obj;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -70,4 +70,6 @@ public class Acesso implements GrantedAuthority {
 			return false;
 		return true;
 	}
+    
+    
 }
