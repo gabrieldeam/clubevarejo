@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +27,7 @@ public class Acesso implements GrantedAuthority {
 	@Column(nullable = false)
 	private String descricao;
 	
+	@JsonIgnore
 	@Override
 	public String getAuthority() {
 		return this.descricao;
