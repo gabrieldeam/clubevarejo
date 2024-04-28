@@ -4,17 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import junit.framework.TestCase;
 import marketplace.clube.varejo.controller.AcessoController;
 import marketplace.clube.varejo.model.Acesso;
 //import marketplace.clube.varejo.repository.AcessoRepository;
-import marketplace.clube.varejo.service.AcessoService;
+//import marketplace.clube.varejo.service.AcessoService;
 
 
 @SpringBootTest(classes = ClubeVarejoApplication.class)
-class ClubeVarejoApplicationTests {
+class ClubeVarejoApplicationTests extends TestCase{
 
-	@Autowired
-	private AcessoService acessoService;
+	//@Autowired
+	//private AcessoService acessoService;
 	
 	//@Autowired
 	//private AcessoRepository acessoRepository;
@@ -27,7 +28,8 @@ class ClubeVarejoApplicationTests {
 
 		Acesso acesso = new Acesso();
 		acesso.setDescricao("ROLE_ADMIN");
-		acessoController.salvarAcesso(acesso);
+		acesso = acessoController.salvarAcesso(acesso).getBody();
+		
 	}
 
 }
