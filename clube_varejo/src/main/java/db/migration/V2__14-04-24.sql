@@ -1,15 +1,10 @@
-*Comando SQL para modificar a tabela nota_fiscal_venda porque foi criado uma restrição automantica no venda_compra_id*
+select constraint_name from information_schema.constraint_column_usage where table_name = 'usuario_acesso' and column_name = 'acesso_id'and constraint_name <> 'unique_acesso_user';
+
+alter table usuario_acesso drop CONSTRAINT "uk_fhwpg5wu1u5p306q8gycxn9ky";
 
 select constraint_name from information_schema.constraint_column_usage where table_name = 'nota_fiscal_venda' and column_name = 'venda_compra_id'and constraint_name <> 'unique_acesso_user';
 
 alter table nota_fiscal_venda drop CONSTRAINT "uk_11ssicgkq10kt8n0vt6n24aak";
-
-
-
-
-
-
-*Comando SQL para modificar a tabela venda_compra porque foi criado uma restrição automantica no nota_fiscal_venda_id*
 
 select constraint_name from information_schema.constraint_column_usage where table_name = 'venda_compra' and column_name = 'nota_fiscal_venda_id'and constraint_name <> 'unique_acesso_user';
 
