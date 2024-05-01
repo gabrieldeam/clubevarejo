@@ -55,6 +55,45 @@ public class Usuario implements UserDetails{
 	private List<Acesso> acesso;
 
 	
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Date getDtAtualSenha() {
+		return dtAtualSenha;
+	}
+
+	public void setDtAtualSenha(Date dtAtualSenha) {
+		this.dtAtualSenha = dtAtualSenha;
+	}
+
+	public List<Acesso> getAcesso() {
+		return acesso;
+	}
+
+	public void setAcesso(List<Acesso> acesso) {
+		this.acesso = acesso;
+	}
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
