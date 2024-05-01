@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
 import marketplace.clube.varejo.ApplicationContextLoad;
 import marketplace.clube.varejo.model.Usuario;
 import marketplace.clube.varejo.repository.UsuarioRepository;
