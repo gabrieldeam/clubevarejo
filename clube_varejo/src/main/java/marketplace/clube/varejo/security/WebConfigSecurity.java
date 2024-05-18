@@ -1,39 +1,49 @@
 package marketplace.clube.varejo.security;
 
-import javax.servlet.http.HttpSessionListener;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 
 import marketplace.clube.varejo.service.ImplementacaoUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class WebConfigSecurity extends WebSecurityConfigurerAdapter implements HttpSessionListener {
+public class WebConfigSecurity {
 
-	@Autowired
-	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
-	
-	/*Irá consultar o user no banco com Spring Security*/
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(implementacaoUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-	}
-	
-	/*Ignora alguas URL livre de autenticação*/
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.GET, "/salvarAcesso", "/deleteAcesso")
-		.antMatchers(HttpMethod.POST, "/salvarAcesso", "/deleteAcesso");
-		/*Ingnorando URL no momento para nao autenticar*/
-	}
+    @Autowired
+    private ImplementacaoUserDetailsService implementacaoUserDetailsService;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(implementacaoUserDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Configuration
+    public static class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+        
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/index").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .logout().logoutSuccessUrl("/index").permitAll()
+                .and()
+                .addFilter(new JWTLoginFilter(authenticationManager()))
+                .addFilter(new JwtApiAutenticacaoFilter());
+        }
+    }
 }

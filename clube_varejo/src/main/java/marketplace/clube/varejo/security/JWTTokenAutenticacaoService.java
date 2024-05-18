@@ -2,9 +2,6 @@ package marketplace.clube.varejo.security;
 
 import java.util.Date;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -12,16 +9,18 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import marketplace.clube.varejo.ApplicationContextLoad;
 import marketplace.clube.varejo.model.Usuario;
 import marketplace.clube.varejo.repository.UsuarioRepository;
 
-/*Criar a autenticação e retonar também a autenticação JWT*/
+//Criar a autenticação e retonar também a autenticação JWT
 @Service
 @Component
 public class JWTTokenAutenticacaoService {
 
-	/*Token de validade de 11 dias e milissegundos*/
+	/*Token de validade de 11 dias*/
 	private static final long EXPIRATION_TIME = 959990000;
 	
 	/*Chave de senha para juntar com o JWT*/
@@ -53,6 +52,7 @@ public class JWTTokenAutenticacaoService {
 		response.getWriter().write("{\"Authorization\": \"" + token + "\"}");
 		
 	}
+	
 	
 	/*Retorna o usuário validado com token ou caso nao seja valido retona null*/
 	public Authentication getAuthetication(HttpServletRequest request, HttpServletResponse response) {
@@ -90,8 +90,10 @@ public class JWTTokenAutenticacaoService {
 		return null;
 	}
 	
+	
 	/*Fazendo liberação contra erro de COrs no navegador*/
 	private void liberacaoCors(HttpServletResponse response) {
+		
 		if (response.getHeader("Access-Control-Allow-Origin") == null) {
 			response.addHeader("Access-Control-Allow-Origin", "*");
 		}
@@ -109,5 +111,8 @@ public class JWTTokenAutenticacaoService {
 		if (response.getHeader("Access-Control-Allow-Methods") == null) {
 			response.addHeader("Access-Control-Allow-Methods", "*");
 		}
+		
 	}
+
+
 }
